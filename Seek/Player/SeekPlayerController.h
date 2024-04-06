@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "Seek/Interface/SeekInteractInterface.h"
 #include "SeekPlayerController.generated.h"
 
 /**
@@ -13,4 +14,5 @@ UCLASS()
 class SEEK_API ASeekPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+	
 };

@@ -5,8 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Logging/LogMacros.h"
-#include "Seek/Interface/SeekInteractInterface.h"
-#include "SeekPlayerCharacter.generated.h"
+#include "SeekCharacter.generated.h"
 
 class USpringArmComponent;
 class UCameraComponent;
@@ -17,7 +16,7 @@ struct FInputActionValue;
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
-class ASeekPlayerCharacter : public ACharacter
+class ASeekCharacter : public ACharacter
 {
 	GENERATED_BODY()
 
@@ -45,12 +44,8 @@ class ASeekPlayerCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
-	/** Interact Input Action */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* InteractAction;
-
 public:
-	ASeekPlayerCharacter();
+	ASeekCharacter();
 
 protected:
 	/** Called for movement input */
@@ -58,10 +53,6 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-
-	/** Called for Interact input*/
-	void Interact(const FInputActionValue& Value);
-	
 
 protected:
 	// APawn interface
@@ -75,17 +66,4 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-
-	UPROPERTY(BlueprintReadOnly, Category = "Interactable")
-	TArray<TScriptInterface<ISeekInteractInterface>> InteractableItems;
-
-	void AddInteractItem(TScriptInterface<ISeekInteractInterface> InteractItem);
-
-	void RemoveInteractItem(TScriptInterface<ISeekInteractInterface> InteractItem);
-
-	UFUNCTION(BlueprintImplementableEvent)
-	void OnInteractItemsChanged();
-
-private:
-	int32 InteractIndex = 0;
 };
